@@ -1,0 +1,84 @@
+
+# Use ERCOT mirrors for all Argo CD core components (argocd image is hosted on Quay)
+global:
+  image:
+    repository: docker-quay.repo.ercot.com/argoproj/argocd
+    # Match your installed Argo CD appVersion (you’re on v3.3.4 per the pod labels)
+    tag: v3.3.4
+    imagePullPolicy: IfNotPresent
+  # One secret containing credentials for all three registries (recommended).
+  # Create it as shown below and reference it here.
+  imagePullSecrets:
+    - name: repo-creds
+
+# Application Controller
+controller:
+  image:
+    repository: docker-quay.repo.ercot.com/argoproj/argocd
+    tag: v3.3.4
+    imagePullPolicy: IfNotPresent
+
+# API Server (UI)
+server:
+  image:
+    repository: docker-quay.repo.ercot.com/argoproj/argocd
+    tag: v3.3.4
+    imagePullPolicy: IfNotPresent
+
+# Repo Server
+repoServer:
+  image:
+    repository: docker-quay.repo.ercot.com/argoproj/argocd
+    tag: v3.3.4
+    imagePullPolicy: IfNotPresent
+
+# ApplicationSet controller
+applicationSet:
+  image:
+    repository: docker-quay.repo.ercot.com/argoproj/argocd
+    tag: v3.3.4
+    imagePullPolicy: IfNotPresent
+
+# Dex (SSO) comes from GHCR
+dex:
+  image:
+    repository: docker-ghcr.repo.ercot.com/dexidp/dex
+    tag: v2.45.1
+    imagePullPolicy: IfNotPresent
+
+# Redis sidecar (single-node) comes from Docker Hub
+redis:
+  image:
+    repository: docker-hub.repo.ercot.com/library/redis
+    # Keep aligned with the chart’s default unless you need a specific version
+    tag: "7-alpine"
+    imagePullPolicy: IfNotPresent
+
+# (Optional) Notifications controller uses the argocd image as well
+# notifications:
+#   image:
+#     repository: docker-quay.repo.ercot.com/argoproj/argocd
+#     tag: v3.3.4
+#     imagePullPolicy: IfNotPresent
+
+
+
+# API Server (UI)
+server:
+  image:
+    repository: docker-quay.repo.ercot.com/argoproj/argocd
+    tag: v3.3.4
+    imagePullPolicy: IfNotPresent
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    hostname: argocd.test.com
+
+  configs:
+    params:
+      server.insecure: true
+

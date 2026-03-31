@@ -1,0 +1,11 @@
+
+helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx `
+  --namespace ingress-nginx --create-namespace `
+  --set controller.kind=DaemonSet `
+  --set controller.hostPort.enabled=true `
+  --set controller.hostPort.ports.http=80 `
+  --set controller.hostPort.ports.https=443 `
+  --set controller.image.registry=docker-k8s.repo.ercot.com `
+  --set controller.image.image=ingress-nginx/controller `
+  --set controller.admissionWebhooks.patch.image.registry=docker-k8s.repo.ercot.com `
+  --set controller.admissionWebhooks.patch.image.image=ingress-nginx/kube-webhook-certgen `
