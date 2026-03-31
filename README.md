@@ -76,7 +76,7 @@ helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f .\val
 verify all pods are installed correctly with the command
 kubectl get pods -n argocd (All pods to be running)
 
-
+==Checking edit===
 ====Getting initial password====
 1. List the secrets in the name space
    kubectl get secrets -n argocd
