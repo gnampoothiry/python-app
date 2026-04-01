@@ -10,11 +10,11 @@ def details():
     now = datetime.now()
     hostName = socket.gethostname()
     return jsonify({'time': now.strftime("%H:%M:%S"),
-                    'hostName': hostName })
+                    'hostName': hostName, 'userName' : 'Govindan' })
 
 @app.route('/api/v1/healthz')
 def health():
-    return jsonify({'status': 'up', }), 200
+    return jsonify({'status': 'up - Latest', }), 200
 
 if __name__ == '__main__':
     app.run(host= "0.0.0.0")
