@@ -18,9 +18,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # 2) Compute a short SHA in shell and place it into the job env
+      - name: Set SHORT_SHA
+        with:
+          context: .
+        run: echo "Generating commit id..."
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+        run: echo "The commit id is ${env.SHORT_SHA} " 
+
       -
         name: Build and push
         uses: docker/build-push-action@v7
         with:
+          context: .
           push: true
-          tags: gnampoothi/python-app:${GITHUB_SHA::6}
+          tags: gnampoothi/python-app:${env.SHORT_SHA}
