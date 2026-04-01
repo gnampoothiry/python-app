@@ -32,4 +32,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: gnampoothi/python-app:${env.SHORT_SHA}
+          tags: gnampoothi/python-app:${{env.SHORT_SHA}}
